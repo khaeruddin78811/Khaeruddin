@@ -2,31 +2,123 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>هدیه برای برادرم</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/font-face.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d0d0d;
+      color: white;
+      font-family: 'Vazirmatn', sans-serif;
+      overflow: hidden;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .social-logos {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .social-logos img {
+      width: 40px;
+      height: 40px;
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s;
+    }
+    
+    .heart-btn {
+      margin: 30px auto;
+      padding: 12px 25px;
+      font-size: 20px;
+      background: #ff0040;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Vazirmatn';
+    }
+
+    /* انیمیشن‌های اصلی */
+    @keyframes pull-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50px); }
+    }
+    
+    @keyframes pull-right {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(50px); }
+    }
+    
+    @keyframes break-heart {
+      0% { transform: scale(1); }
+      100% { transform: scale(0.8) rotate(15deg); }
+    }
+    
+    @keyframes fix-heart {
+      0% { transform: scale(0.8) rotate(15deg); }
+      100% { transform: scale(1); }
+    }
+  </style>
 </head>
 <body>
   <div class="social-logos">
-    <img src="assets/youtube-icon.png" alt="یوتیوب">
     <img src="assets/instagram-icon.png" alt="اینستاگرام">
     <img src="assets/telegram-icon.png" alt="تلگرام">
-    <img src="assets/tiktok-icon.png" alt="تیک تاک">
+    <img src="assets/tiktok-icon.png" alt="تیک‌تاک">
   </div>
 
-  <button class="heart-btn" id="heartBtn">❤️ برای برادرم</button>
+  <button class="heart-btn" id="heartBtn">برای برادرم ❤️</button>
 
-  <div class="animation-area" id="animationArea">
-    <div class="scene-container">
-      <!-- SVG elements will be added by JavaScript -->
-    </div>
-    <div class="final-message">
-      <h2>جُما خنیا‌قوبی ❤️</h2>
-      <p>برای برادرم، به احترام تمام زحماتت</p>
-    </div>
+  <div id="animationContainer" style="position:relative; height:300px; margin:auto; width:100%; max-width:500px;">
+    <!-- SVG elements will be added here -->
   </div>
 
-  <script src="script.js"></script>
+  <p id="finalMessage" style="opacity:0; margin-top:20px; transition:opacity 1s;">برای برادرم، به احترام تمام زحماتت</p>
+
+  <script>
+    document.getElementById('heartBtn').addEventListener('click', function() {
+      const container = document.getElementById('animationContainer');
+      container.innerHTML = `
+        <svg viewBox="0 0 400 200" style="width:100%; height:100%">
+          <!-- افراد -->
+          <g id="leftPerson">
+            <circle cx="100" cy="100" r="20" fill="#f5d0b0" />
+            <rect x="90" y="120" width="20" height="40" fill="#4a86e8" />
+            <line x1="70" y1="125" x2="130" y2="125" stroke="#4a86e8" stroke-width="10" />
+          </g>
+          
+          <g id="rightPerson">
+            <circle cx="300" cy="100" r="20" fill="#f5d0b0" />
+            <rect x="290" y="120" width="20" height="40" fill="#e84a5f" />
+            <line x1="270" y1="125" x2="330" y2="125" stroke="#e84a5f" stroke-width="10" />
+          </g>
+          
+          <!-- قلب -->
+          <path id="heart" d="M200,100 Q225,75 250,100 T300,100 T350,100 L400,150 L200,300 L0,150 L50,100 Q75,75 100,100 T150,100 T200,100 Z" 
+                fill="#ff0040" transform="translate(0,0)" />
+        </svg>
+      `;
+
+      // انیمیشن کشیدن قلب
+      setTimeout(() => {
+        document.getElementById('leftPerson').style.animation = "pull-left 1s forwards";
+        document.getElementById('rightPerson').style.animation = "pull-right 1s forwards";
+        document.getElementById('heart').style.animation = "break-heart 1s forwards";
+      }, 500);
+
+      // نمایش پیام نهایی
+      setTimeout(() => {
+        document.getElementById('finalMessage').style.opacity = "1";
+      }, 2500);
+    });
+  </script>
 </body>
 </html>
